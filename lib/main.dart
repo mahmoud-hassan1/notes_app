@@ -1,13 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes_app/features/auth/data/repositories/auth_repo_imp.dart';
+import 'package:notes_app/features/auth/presentation/cubits/auth_cubit/auth_cubit.dart';
 import 'package:notes_app/features/auth/presentation/views/login_view.dart';
 import 'package:notes_app/firebase_options.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
-);
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(const MyApp());
 }
@@ -15,12 +19,14 @@ void main() async{
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: const Color.fromRGBO(32,26,48,1)),
+      theme: ThemeData.dark().copyWith(
+          scaffoldBackgroundColor: const Color.fromRGBO(32, 26, 48, 1)),
       debugShowCheckedModeBanner: false,
       home: const LoginView(),
     );

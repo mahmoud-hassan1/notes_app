@@ -16,5 +16,10 @@ class FirestoreNoteDataSource {
       .snapshots()
       .map((snapshot) => snapshot.docs.map((doc) => NoteModel.fromFirestore(doc)).toList());
   }
-
+  Future<void> deleteNote(String id) async{
+      await firestore.collection('notes').doc(id).delete();
+  }
+   Future<void> updateNote(NoteModel note) async{
+      await firestore.collection('notes').doc(note.id).update(note.toMap());
+    }
 }

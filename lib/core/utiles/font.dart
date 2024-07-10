@@ -15,6 +15,12 @@ abstract class FontStyles{
   fontWeight: FontWeight.w500,
   fontSize: getResponsiveFontSize(context,fontSize: 20),
  ) ;
+  static TextStyle kFontSize30 (BuildContext context)=>TextStyle(
+  color: Colors.white,
+  fontWeight: FontWeight.w700,
+  fontSize: getResponsiveFontSize(context,fontSize: 30),
+ ) ;
+ 
  
 }
 double getResponsiveFontSize(context,{required double fontSize}) {

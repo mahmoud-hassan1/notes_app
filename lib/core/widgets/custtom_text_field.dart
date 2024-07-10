@@ -4,10 +4,11 @@ import 'package:notes_app/core/utiles/font.dart';
 
 class CustomTextField extends StatefulWidget {
   const CustomTextField({
-    super.key, required this.label, required this.controller,
+    super.key, required this.label, required this.controller,this.validator,
   });
    final String label;
  final TextEditingController controller;
+ final String? Function(String?)? validator;
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
 }
@@ -36,7 +37,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: TextField(
+      child: TextFormField(
         controller: widget.controller,
             focusNode: _focusNode,
             decoration: InputDecoration(
@@ -54,8 +55,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
               ),
               filled: true,
               fillColor: _fillColor,
+            ),
+            validator: widget.validator,
         ),
-      ),
-    );
+      );
   }
 }

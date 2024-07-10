@@ -9,7 +9,7 @@ import 'package:notes_app/features/auth/data/repositories/auth_repo_imp.dart';
 import 'package:notes_app/features/auth/presentation/cubits/auth_cubit/auth_cubit.dart';
 import 'package:notes_app/features/auth/presentation/views/signup_view.dart';
 import 'package:notes_app/features/auth/presentation/views/widgets/custtom_button.dart';
-import 'package:notes_app/features/auth/presentation/views/widgets/custtom_text_field.dart';
+import 'package:notes_app/core/widgets/custtom_text_field.dart';
 import 'package:notes_app/features/home/presentation/views/home_view.dart';
 
 class LoginViewBody extends StatelessWidget {
@@ -32,11 +32,12 @@ class LoginViewBody extends StatelessWidget {
            snackBar(content: state.message, context: context);
             isLoading=false;
           } else if (state is AuthAuthenticated) {
+            
             snackBar(content: "Login Success", context: context);
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const HomeView(),
+                  builder: (context) =>  HomeView(uid: state.user.uid,),
                 ));
           }
         },

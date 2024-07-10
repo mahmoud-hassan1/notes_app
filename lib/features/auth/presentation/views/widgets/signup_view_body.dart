@@ -9,7 +9,7 @@ import 'package:notes_app/features/auth/data/repositories/auth_repo_imp.dart';
 import 'package:notes_app/features/auth/presentation/cubits/auth_cubit/auth_cubit.dart';
 import 'package:notes_app/features/auth/presentation/views/login_view.dart';
 import 'package:notes_app/features/auth/presentation/views/widgets/custtom_button.dart';
-import 'package:notes_app/features/auth/presentation/views/widgets/custtom_text_field.dart';
+import 'package:notes_app/core/widgets/custtom_text_field.dart';
 import 'package:notes_app/features/home/presentation/views/home_view.dart';
 
 class SignupViewBody extends StatefulWidget {
@@ -47,7 +47,9 @@ class _SignupViewBodyState extends State<SignupViewBody> {
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const HomeView(),
+                  builder: (context) =>  HomeView(
+                     uid: state.user.uid,
+                  ),
                 ));
           }
         },

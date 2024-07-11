@@ -12,6 +12,7 @@ import 'package:notes_app/features/auth/presentation/views/widgets/custtom_butto
 import 'package:notes_app/core/widgets/custtom_text_field.dart';
 import 'package:notes_app/features/home/presentation/views/home_view.dart';
 
+// ignore: must_be_immutable
 class LoginViewBody extends StatelessWidget {
   LoginViewBody({super.key});
   final TextEditingController emailController = TextEditingController();

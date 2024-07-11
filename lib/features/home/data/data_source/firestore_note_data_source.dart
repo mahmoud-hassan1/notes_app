@@ -6,15 +6,21 @@ class FirestoreNoteDataSource {
 
   FirestoreNoteDataSource({required this.firestore});
 
-  Future<void> addNote(NoteModel note) async {
-    await firestore.collection('notes').add(note.toMap());
+  Future<void> addNote({required String title,required String content,required String uid}) async {
+    await firestore.collection('notes').add(
+      {
+      'title': title,
+      'content': content,
+      'uid': uid,
+    }
+    );
   }
 
-  Stream<List<NoteModel>> getNotes(String uid) {
+  Future<List<NoteModel>> getNotes(String uid) {
     return firestore.collection('notes')
       .where('uid', isEqualTo: uid)
-      .snapshots()
-      .map((snapshot) => snapshot.docs.map((doc) => NoteModel.fromFirestore(doc)).toList());
+      .get()
+      .then((snapshot) => snapshot.docs.map((doc) => NoteModel.fromFirestore(doc)).toList());
   }
   Future<void> deleteNote(String id) async{
       await firestore.collection('notes').doc(id).delete();

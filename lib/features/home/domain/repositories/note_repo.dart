@@ -1,8 +1,9 @@
+import 'package:notes_app/features/home/data/models/note_model.dart';
 import 'package:notes_app/features/home/domain/entities/note.dart';
 
 abstract class NoteRepository {
-  Future<void> addNote(Note note);
-  Stream<List<Note>> getNotes(String uid);
-  Future<void> updateNote(Note note);
+  Future<void> addNote({required String title,required String content,required String uid});
+  Future<List<Note>> getNotes(String uid);
+  Future<void> updateNote(NoteModel note);
   Future<void> deleteNote(String id);
 }

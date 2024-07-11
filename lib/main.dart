@@ -1,9 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:notes_app/features/auth/data/repositories/auth_repo_imp.dart';
-import 'package:notes_app/features/auth/presentation/cubits/auth_cubit/auth_cubit.dart';
 import 'package:notes_app/features/auth/presentation/views/login_view.dart';
 import 'package:notes_app/firebase_options.dart';
 

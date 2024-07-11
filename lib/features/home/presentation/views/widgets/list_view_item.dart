@@ -4,7 +4,7 @@ import 'package:notes_app/core/utiles/font.dart';
 import 'package:notes_app/features/home/domain/entities/note.dart';
 
 class ListViewItem extends StatelessWidget {
-   ListViewItem({
+   const ListViewItem({
     super.key, required this.note,
   });
  final Note note;

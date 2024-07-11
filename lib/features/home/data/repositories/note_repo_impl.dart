@@ -9,20 +9,14 @@ class NoteRepositoryImpl implements NoteRepository {
   NoteRepositoryImpl({required this.dataSource});
 
   @override
-  Future<void> addNote(Note note) {
-    return dataSource.addNote(NoteModel(id: note.id, title: note.title, content: note.content, uid: note.uid));
+  Future<void> addNote({required String title,required String content,required String uid}) {
+    return dataSource.addNote(content: content,title: title,uid: uid);
   }
 
   @override
-  Stream<List<Note>> getNotes(String uid) {
-    return dataSource.getNotes(uid).map((noteModels) => 
-      noteModels.map((model) => Note(
-        id: model.id,
-        title: model.title,
-        content: model.content,
-         uid: model.uid,
-      )).toList()
-    );
+  Future<List<Note>> getNotes(String uid) async {
+    final noteModels = await dataSource.getNotes(uid);
+    return noteModels;
   }
   
   @override
@@ -31,9 +25,9 @@ class NoteRepositoryImpl implements NoteRepository {
   }
   
   @override
-  Future<void> updateNote(Note note) async{
+  Future<void> updateNote(NoteModel note) async{
 
-   await dataSource.updateNote(NoteModel(id: note.id, title: note.title, content: note.content, uid: note.uid));
+   await dataSource.updateNote(note);
   }
 
 }

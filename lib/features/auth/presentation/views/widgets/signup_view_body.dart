@@ -13,9 +13,10 @@ import 'package:notes_app/core/widgets/custtom_text_field.dart';
 import 'package:notes_app/features/home/presentation/views/home_view.dart';
 
 class SignupViewBody extends StatefulWidget {
-  SignupViewBody({Key? key}) : super(key: key);
+  const SignupViewBody({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _SignupViewBodyState createState() => _SignupViewBodyState();
 }
 

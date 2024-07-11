@@ -3,7 +3,7 @@ import 'package:notes_app/features/home/domain/entities/note.dart';
 
 abstract class NoteRepository {
   Future<void> addNote({required String title,required String content,required String uid});
-  Future<List<Note>> getNotes(String uid);
+  Future<List<NoteModel>> getNotes(String uid);
   Future<void> updateNote(NoteModel note);
   Future<void> deleteNote(String id);
 }

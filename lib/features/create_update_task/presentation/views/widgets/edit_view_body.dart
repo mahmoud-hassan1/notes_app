@@ -3,17 +3,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:notes_app/core/widgets/custtom_text_field.dart';
 import 'package:notes_app/core/widgets/snackbar.dart';
-import 'package:notes_app/features/create_update_task/presentation/manger/add_note_cubit/add_note_cubit.dart';
+import 'package:notes_app/features/create_update_task/presentation/manger/edit_note_cubit/edit_note_cubit.dart';
 import 'package:notes_app/features/create_update_task/presentation/views/widgets/custom_update_button.dart';
+import 'package:notes_app/features/home/data/models/note_model.dart';
 import 'package:notes_app/features/home/presentation/views/home_view.dart';
 
 // ignore: must_be_immutable
-class AddViewBody extends StatelessWidget {
-  AddViewBody({
+class EditViewBody extends StatelessWidget {
+  EditViewBody({
     super.key,
-    required this.uid,
-  });
-  final String uid;
+    required this.note,
+  }) {
+    titleController.text = note.title;
+    contentController.text = note.content;
+  }
+  final NoteModel note;
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
   GlobalKey<FormState> keyForm = GlobalKey();
@@ -21,20 +25,20 @@ class AddViewBody extends StatelessWidget {
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AddNoteCubit, AddNoteState>(
+    return BlocConsumer<EditNoteCubit, EditNoteState>(
       listener: (context, state) {
-        if (state is AddNoteFailed) {
+        if (state is EditNoteFailed) {
           snackBar(content: "Something Went Wrong", context: context);
           isLoading = false;
-        } else if (state is AddNoteLoading) {
+        } else if (state is EditNoteLoading) {
           isLoading = true;
-        } else if (state is AddNoteSuccess) {
-          snackBar(content: "Note Added Successfully", context: context);
+        } else if (state is EditNoteSuccess) {
+          snackBar(content: "Note Edited Successfully", context: context);
           isLoading = false;
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
-                builder: (context) => HomeView(uid: uid),
+                builder: (context) => HomeView(uid: note.uid),
               ),
               (Route<dynamic> route) => false);
         }
@@ -70,17 +74,15 @@ class AddViewBody extends StatelessWidget {
                     height: 16,
                   ),
                   CustomUpdateButton(
-                      title: "Add Note",
-                      onPressed: () {
-                         if (keyForm.currentState!.validate()) {
-                        BlocProvider.of<AddNoteCubit>(context).addNote(
-                          title: titleController.text,
-                          content: contentController.text,
-                          uid: uid,
-                        );
-                      }
-                    }
-                  ),
+                      title: "Edit Note",
+                        onPressed: () {
+                           if (keyForm.currentState!.validate()) {
+                            note.title=titleController.text;
+                            note.content=contentController.text;
+                              BlocProvider.of<EditNoteCubit>(context).editNote(note: note);
+                           }
+                        }
+                      ),
                 ],
               ),
             ),

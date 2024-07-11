@@ -17,13 +17,9 @@ class CustomListView extends StatelessWidget {
         }
         else if (state is FetchNotesSuccess){
           return Expanded(
-            child: ListView.separated(
-          itemBuilder: (context, index) =>  ListViewItem(note: state.notes[index],),
-          separatorBuilder: (BuildContext context, int index) {
-            return const SizedBox(
-              height: 16,
-            );
-          },
+            child: ListView.builder(
+          itemBuilder: (context, index) =>  ListViewItem(note: state.notes[index],
+          ),
           itemCount: state.notes.length,
         ));
           

@@ -1,7 +1,7 @@
 class Note {
   final String id;
-  final String title;
-  final String content;
+   String title;
+   String content;
   final String uid;
   Note( {
     required this.uid,

@@ -11,18 +11,17 @@ class AddView extends StatelessWidget {
   final String uid;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add Note'),
-        backgroundColor: Colors.transparent,
-        leading: BackButton(onPressed: (){
-          Navigator.pop(context);
-        },),
-        centerTitle: true,
-      ),
-      body: BlocProvider(
-        create: (context) => AddNoteCubit(NoteRepositoryImpl(dataSource:FirestoreNoteDataSource(firestore: FirebaseFirestore.instance) )),
-        child: AddViewBody(uid: uid,),
+    return BlocProvider(
+      create: (context) => AddNoteCubit(NoteRepositoryImpl(dataSource:FirestoreNoteDataSource(firestore: FirebaseFirestore.instance) )),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Add Note'),
+          backgroundColor: Colors.transparent,
+          centerTitle: true,
+        ),
+        body: AddViewBody(
+          uid: uid,
+        ),
       ),
     );
   }

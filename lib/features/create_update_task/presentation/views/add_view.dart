@@ -1,57 +1,28 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:notes_app/core/widgets/custtom_text_field.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes_app/features/create_update_task/presentation/manger/add_note_cubit/add_note_cubit.dart';
+import 'package:notes_app/features/create_update_task/presentation/views/widgets/add_view_body.dart';
+import 'package:notes_app/features/home/data/data_source/firestore_note_data_source.dart';
+import 'package:notes_app/features/home/data/repositories/note_repo_impl.dart';
 
 class AddView extends StatelessWidget {
-   AddView({super.key});
-  TextEditingController titleController =  TextEditingController();
-    TextEditingController contentController =  TextEditingController();
-      GlobalKey<FormState> keyForm = GlobalKey();
-        AutovalidateMode mode = AutovalidateMode.always;
+  const AddView({super.key, required this.uid});
+  final String uid;
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: const Text('Add Note'),
+        backgroundColor: Colors.transparent,
+        leading: BackButton(onPressed: (){
+          Navigator.pop(context);
+        },),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Form(
-          key: keyForm,
-          autovalidateMode: mode,
-          child: Column(
-            children: [
-              CustomTextField(
-                controller: titleController,
-                label: 'Title',
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a title';
-                  }
-                  return null;
-                },
-              ),
-              CustomTextField(
-                controller: contentController,
-                label: 'Content',
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some content';
-                  }
-                  return null;
-                },
-              ),
-              ElevatedButton(
-                onPressed: () {
-                      if(keyForm.currentState!.validate()){
-                        
-                    }
-                },
-                child: const Text('Add Note'),
-              ),
-            ],
-          ),
-        ),
+      body: BlocProvider(
+        create: (context) => AddNoteCubit(NoteRepositoryImpl(dataSource:FirestoreNoteDataSource(firestore: FirebaseFirestore.instance) )),
+        child: AddViewBody(uid: uid,),
       ),
     );
   }

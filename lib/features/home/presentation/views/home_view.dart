@@ -29,7 +29,7 @@ class HomeView extends StatelessWidget {
         body: const HomeViewBody(),
         floatingActionButton: FloatingActionButton(
           onPressed: () { 
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AddView(),));
+            Navigator.push(context, MaterialPageRoute(builder: (context) =>  AddView(uid: uid,),));
           },
           child: const Icon(Icons.add),
         ),

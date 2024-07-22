@@ -50,6 +50,7 @@ class AddViewBody extends StatelessWidget {
               child: Column(
                 children: [
                   CustomTextField(
+                    prefixIcon: const Icon(Icons.note_alt_outlined),
                     controller: titleController,
                     label: 'Title',
                     validator: (value) {
@@ -63,6 +64,7 @@ class AddViewBody extends StatelessWidget {
                     height: 16,
                   ),
                   CustomTextField(
+                    prefixIcon: const Icon(Icons.note_alt_outlined),
                     controller: contentController,
                     label: 'Content',
                   ),

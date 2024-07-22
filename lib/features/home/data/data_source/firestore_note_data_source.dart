@@ -12,13 +12,14 @@ class FirestoreNoteDataSource {
       'title': title,
       'content': content,
       'uid': uid,
+      'createdAt': DateTime.now(),
     }
     );
   }
 
   Future<List<NoteModel>> getNotes(String uid) {
     return firestore.collection('notes')
-      .where('uid', isEqualTo: uid)
+      .where('uid', isEqualTo: uid).orderBy("createdAt",descending: true)
       .get()
       .then((snapshot) => snapshot.docs.map((doc) => NoteModel.fromFirestore(doc)).toList());
   }

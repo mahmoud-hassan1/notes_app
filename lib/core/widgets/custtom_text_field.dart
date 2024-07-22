@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:notes_app/core/utiles/app_colors.dart';
 import 'package:notes_app/core/utiles/font.dart';
 
+// ignore: must_be_immutable
 class CustomTextField extends StatefulWidget {
-  const CustomTextField({
-    super.key, required this.label, required this.controller,this.validator,
+   CustomTextField({
+    super.key, required this.label, required this.controller,this.validator, required this.prefixIcon,this.obscure=false,  this.password=false,
   });
-   final String label;
+  final Icon prefixIcon;
+  final String label;
+  final bool password;
+  bool obscure;
  final TextEditingController controller;
  final String? Function(String?)? validator;
   @override
@@ -40,8 +44,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
       child: TextFormField(
         controller: widget.controller,
             focusNode: _focusNode,
+            obscureText:widget.obscure ,
             decoration: InputDecoration(
-              prefixIcon: const Icon(Icons.mail_outline),
+              
+              suffixIcon: widget.password?IconButton(onPressed: (){
+                widget.obscure=!widget.obscure;
+                setState(() {
+                  
+                });
+              }, icon: Icon(!widget.obscure?Icons.visibility_outlined:Icons.visibility_off_outlined )):null,
+              prefixIcon:  widget.prefixIcon,
               label: Text(
                 widget.label,
                 style: FontStyles.kSmallTextStyle(context).copyWith(color: Colors.white70),

@@ -1,6 +1,6 @@
 import 'package:notes_app/features/home/data/data_source/firestore_note_data_source.dart';
 import 'package:notes_app/features/home/data/models/note_model.dart';
-import 'package:notes_app/features/home/domain/entities/note.dart';
+
 import 'package:notes_app/features/home/domain/repositories/note_repo.dart';
 
 class NoteRepositoryImpl implements NoteRepository {

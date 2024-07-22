@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:notes_app/features/home/data/models/note_model.dart';
 
 import 'package:notes_app/features/home/data/repositories/note_repo_impl.dart';
-import 'package:notes_app/features/home/domain/entities/note.dart';
 
 part 'fetch_notes_state.dart';
 

@@ -74,6 +74,7 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                       height: 32,
                     ),
                     CustomTextField(
+                      prefixIcon: const Icon(Icons.mail_outline),
                       label: "Email",
                       controller: emailController,
                     ),
@@ -81,6 +82,9 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                       height: 32,
                     ),
                     CustomTextField(
+                      password: true,
+                      obscure: true,
+                      prefixIcon: const Icon(Icons.lock_outline),
                       label: "Password",
                       controller: passwordController,
                     ),

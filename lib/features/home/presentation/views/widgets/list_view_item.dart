@@ -7,8 +7,6 @@ import 'package:notes_app/features/create_update_task/presentation/views/edit_vi
 import 'package:notes_app/features/home/data/data_source/firestore_note_data_source.dart';
 import 'package:notes_app/features/home/data/models/note_model.dart';
 import 'package:notes_app/features/home/data/repositories/note_repo_impl.dart';
-import 'package:notes_app/features/home/domain/entities/note.dart';
-
 class ListViewItem extends StatelessWidget {
    const ListViewItem({
     super.key, required this.note,

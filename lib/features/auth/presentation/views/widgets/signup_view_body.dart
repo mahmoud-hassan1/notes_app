@@ -24,7 +24,7 @@ class _SignupViewBodyState extends State<SignupViewBody> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isLoading = false;
-
+  GlobalKey<FormState> keyForm = GlobalKey();
   @override
   Widget build(BuildContext context) {
     final firebaseAuth = FirebaseAuth.instance;
@@ -58,74 +58,114 @@ class _SignupViewBodyState extends State<SignupViewBody> {
           return ModalProgressHUD(
             inAsyncCall: isLoading,
             child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.only(top: height / 4),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 32),
-                      child: Text(
-                        "Create Account",
-                        style: FontStyles.kLargeTextStyle(context),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    CustomTextField(
-                      prefixIcon: const Icon(Icons.mail_outline),
-                      label: "Email",
-                      controller: emailController,
-                    ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    CustomTextField(
-                      password: true,
-                      obscure: true,
-                      prefixIcon: const Icon(Icons.lock_outline),
-                      label: "Password",
-                      controller: passwordController,
-                    ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    CustomButton(
-                      onTap: () => BlocProvider.of<AuthCubit>(context).signupUser(
-                          emailController.text, passwordController.text),
-                      emailController: emailController,
-                      passwordController: passwordController,
-                      height: height,
-                      label: "SIGN UP",
-                    ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Already have an account?",
-                          style: FontStyles.kSmallTextStyle(context),
+              child: Form(
+                key: keyForm,
+                child: Padding(
+                  padding: EdgeInsets.only(top: height / 4),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 32),
+                        child: Text(
+                          "Create Account",
+                          style: FontStyles.kLargeTextStyle(context),
                         ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const LoginView(),
-                                ));
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      CustomTextField(
+                        expand: false,
+                          keyForm: keyForm,
+                          validator: (value){
+                            RegExp regex=RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+                             if (value!.isEmpty) {
+                              return 'Please enter mail';
+                            } else {
+                              if (!regex.hasMatch(value)) {
+                                return 'Enter valid mail';
+                              } else {
+                                return null;
+                              }
+                              }
                           },
-                          style: TextButton.styleFrom(
-                              padding: const EdgeInsets.all(0)),
-                          child: Text("Sign in",
-                              style: FontStyles.kSmallTextStyle(context)
-                                  .copyWith(color: AppColors.kMintGreen)),
-                        )
-                      ],
-                    ),
-                  ],
+                        prefixIcon: const Icon(Icons.mail_outline),
+                        label: "Email",
+                        controller: emailController,
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      CustomTextField(
+                        expand: false,
+                          keyForm: keyForm,
+                         validator: (value){
+                            RegExp regex =
+                                RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+                            if (value!.isEmpty) {
+                              return 'Please enter password';
+                            } else {
+                              if (!regex.hasMatch(value)) {
+                                return 'Enter valid password';
+                              } else {
+                                return null;
+                              }
+                         }
+                  
+                          },
+                        password: true,
+                        obscure: true,
+                        prefixIcon: const Icon(Icons.lock_outline),
+                        label: "Password",
+                        controller: passwordController,
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      CustomButton(
+                        onTap: () { 
+                          if(emailController.text.isNotEmpty&&passwordController.text.isNotEmpty){
+                          BlocProvider.of<AuthCubit>(context).signupUser(
+                            emailController.text, passwordController.text);
+                          }
+                          else {
+                            snackBar(content: "Please enter Your email and password", context: context);
+                          }
+                        },
+                        emailController: emailController,
+                        passwordController: passwordController,
+                        height: height,
+                        label: "SIGN UP",
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Already have an account?",
+                            style: FontStyles.kSmallTextStyle(context),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const LoginView(),
+                                  ));
+                            },
+                            style: TextButton.styleFrom(
+                                padding: const EdgeInsets.all(0)),
+                            child: Text("Sign in",
+                                style: FontStyles.kSmallTextStyle(context)
+                                    .copyWith(color: AppColors.kMintGreen)),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

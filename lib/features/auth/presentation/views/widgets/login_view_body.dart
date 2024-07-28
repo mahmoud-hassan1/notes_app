@@ -17,7 +17,10 @@ class LoginViewBody extends StatelessWidget {
   LoginViewBody({super.key});
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  GlobalKey<FormState> keyForm = GlobalKey();
+  AutovalidateMode mode = AutovalidateMode.disabled;
   bool isLoading = false;
+  bool validate=false;
   @override
   Widget build(BuildContext context) {
       final firebaseAuth = FirebaseAuth.instance;
@@ -46,71 +49,114 @@ class LoginViewBody extends StatelessWidget {
           return ModalProgressHUD(
             inAsyncCall: isLoading,
             child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.only(top: height / 4),
-                child: Column(
-                  children: [
-                    Text(
-                      "Login",
-                      style: FontStyles.kLargeTextStyle(context),
-                    ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    CustomTextField(
-                      prefixIcon: const Icon(Icons.mail_outline),
-                      label: "Email",
-                      controller: emailController,
-                    ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    CustomTextField(
-                      password: true,
-                      obscure: true,
-                      prefixIcon: const Icon(Icons.lock_outline),
-                      label: "Password",
-                      controller: passwordController,
-                    ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    CustomButton(
-                      emailController: emailController,
-                      passwordController: passwordController,
-                      onTap: () => BlocProvider.of<AuthCubit>(context)
-                          .loginUser(
-                              emailController.text, passwordController.text),
-                      height: height,
-                      label: "LOGIN",
-                    ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Don't Have an account?",
-                          style: FontStyles.kSmallTextStyle(context),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const SignupView(),
-                                ));
-                          },
-                          style: TextButton.styleFrom(
-                              padding: const EdgeInsets.all(0)),
-                          child: Text("Sign up",
-                              style: FontStyles.kSmallTextStyle(context)
-                                  .copyWith(color: AppColors.kMintGreen)),
-                        )
-                      ],
-                    ),
-                  ],
+              child: Form(
+                key: keyForm,
+                autovalidateMode: mode,
+                child: Padding(
+                  padding: EdgeInsets.only(top: height / 4),
+                  child: Column(
+                    children: [
+                      Text(
+                        "Login",
+                        style: FontStyles.kLargeTextStyle(context),
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      CustomTextField(
+                        expand: false,
+                        keyForm: keyForm,
+                        validate: validate,
+                        validator: (value){
+                          RegExp regex=RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+                           if (value!.isEmpty) {
+                            return 'Please enter mail';
+                          } else {
+                            if (!regex.hasMatch(value)) {
+                              return 'Enter valid mail';
+                            } else {
+                              return null;
+                            }
+                            }
+                        },
+                        prefixIcon: const Icon(Icons.mail_outline),
+                        label: "Email",
+                        controller: emailController,
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      CustomTextField(
+                        expand: false,
+                        validate: validate,
+                        keyForm: keyForm,
+                        password: true,
+                        obscure: true,
+                        validator: (value){
+                          RegExp regex =
+                              RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+                          if (value!.isEmpty) {
+                            return 'Please enter password';
+                          } else {
+                            if (!regex.hasMatch(value)) {
+                              return 'Enter valid password';
+                            } else {
+                              return null;
+                            }
+                       }
+                
+                        },
+                        prefixIcon: const Icon(Icons.lock_outline),
+                        label: "Password",
+                        controller: passwordController,
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      CustomButton(
+                        emailController: emailController,
+                        passwordController: passwordController,
+                        onTap: () { 
+                          if(emailController.text.isNotEmpty&&passwordController.text.isNotEmpty){
+                          BlocProvider.of<AuthCubit>(context)
+                            .loginUser(
+                                emailController.text, passwordController.text);
+                          }
+                          else {
+                            snackBar(content: "Please enter Your email and password", context: context);
+                          }
+                        },
+                        height: height,
+                        label: "LOGIN",
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Don't Have an account?",
+                            style: FontStyles.kSmallTextStyle(context),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const SignupView(),
+                                  ));
+                            },
+                            style: TextButton.styleFrom(
+                                padding: const EdgeInsets.all(0)),
+                            child: Text("Sign up",
+                                style: FontStyles.kSmallTextStyle(context)
+                                    .copyWith(color: AppColors.kMintGreen)),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

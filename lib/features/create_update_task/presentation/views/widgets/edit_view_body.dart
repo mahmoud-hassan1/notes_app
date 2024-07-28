@@ -54,6 +54,7 @@ class EditViewBody extends StatelessWidget {
               child: Column(
                 children: [
                   CustomTextField(
+                    validate: true,
                     prefixIcon: const Icon(Icons.note_alt_outlined),
                     controller: titleController,
                     label: 'Title',

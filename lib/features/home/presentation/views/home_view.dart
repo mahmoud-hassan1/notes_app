@@ -18,14 +18,7 @@ class HomeView extends StatelessWidget {
         cubit.fetchNotes(uid);
         return cubit;
         },
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          title: const Text(
-            "Notes",
-          ),
-          centerTitle: true,
-        ),
+      child: Scaffold( 
         body: const HomeViewBody(),
         floatingActionButton: FloatingActionButton(
           onPressed: () { 

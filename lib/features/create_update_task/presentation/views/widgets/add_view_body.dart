@@ -40,51 +40,53 @@ class AddViewBody extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return ModalProgressHUD(
-          inAsyncCall: isLoading,
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Form(
-              key: keyForm,
-              autovalidateMode: mode,
-              child: Column(
-                children: [
-                  CustomTextField(
-                    validate: true,
-                    prefixIcon: const Icon(Icons.note_alt_outlined),
-                    controller: titleController,
-                    label: 'Title',
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter a title';
+        return SingleChildScrollView(
+          child: ModalProgressHUD(
+            inAsyncCall: isLoading,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Form(
+                key: keyForm,
+                autovalidateMode: mode,
+                child: Column(
+                  children: [
+                    CustomTextField(
+                      validate: true,
+                      prefixIcon: const Icon(Icons.note_alt_outlined),
+                      controller: titleController,
+                      label: 'Title',
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a title';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    CustomTextField(
+                      prefixIcon: const Icon(Icons.note_alt_outlined),
+                      controller: contentController,
+                      label: 'Content',
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    CustomUpdateButton(
+                        title: "Add Note",
+                        onPressed: () {
+                           if (keyForm.currentState!.validate()) {
+                          BlocProvider.of<AddNoteCubit>(context).addNote(
+                            title: titleController.text,
+                            content: contentController.text,
+                            uid: uid,
+                          );
+                        }
                       }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  CustomTextField(
-                    prefixIcon: const Icon(Icons.note_alt_outlined),
-                    controller: contentController,
-                    label: 'Content',
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  CustomUpdateButton(
-                      title: "Add Note",
-                      onPressed: () {
-                         if (keyForm.currentState!.validate()) {
-                        BlocProvider.of<AddNoteCubit>(context).addNote(
-                          title: titleController.text,
-                          content: contentController.text,
-                          uid: uid,
-                        );
-                      }
-                    }
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

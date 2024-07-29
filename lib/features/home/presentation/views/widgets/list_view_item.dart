@@ -14,73 +14,52 @@ class ListViewItem extends StatelessWidget {
  final NoteModel note;
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
-           key: Key(note.id),
-            direction: DismissDirection.horizontal,
-            background: const SizedBox(
-              width: double.infinity,
-              child: Center(
-                child: Icon(
-                  Icons.delete,
-                  color: Colors.white,
+    return Stack(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(bottom: 16),
+          width: double.infinity,
+          decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: AppColors.kItemBackgroundColor
+          ),
+          alignment: Alignment.topLeft,
+          padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 20),
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  note.title,
+                  style: FontStyles.kFontSize30(context).copyWith(),
+                  textAlign: TextAlign.start,
                 ),
               ),
-            ),
-            onDismissed: (direction) {
-              try{
-               NoteRepositoryImpl(dataSource: FirestoreNoteDataSource(firestore: FirebaseFirestore.instance)).deleteNote(note.id);
-              }
-              catch(e){
-                snackBar(content: "Something went wrong while removing note", context: context);
-              }
-            },
-      child: Stack(
-        children: [
-          Container(
-            margin: const EdgeInsets.only(bottom: 16),
-            width: double.infinity,
-            decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: AppColors.kItemBackgroundColor
-            ),
-            alignment: Alignment.topLeft,
-            padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 20),
-            child: Column(
-              children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    note.title,
-                    style: FontStyles.kFontSize30(context).copyWith(),
-                    textAlign: TextAlign.start,
-                  ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  note.content,
+                  style: FontStyles.kSmallTextStyle(context).copyWith(),
+                  maxLines: 2,
+                  textAlign: TextAlign.start,
                 ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    note.content,
-                    style: FontStyles.kSmallTextStyle(context).copyWith(),
-                    maxLines: 2,
-                    textAlign: TextAlign.start,
-                  ),
-                ),
-              ],
-              ) ,
+              ),
+            ],
+            ) ,
+        ),
+        Positioned(
+          right: 0,
+          height: 32,
+          child: IconButton(
+            onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => EditView(note: note),));
+            }, icon: const Icon(
+            Icons.edit
           ),
-          Positioned(
-            right: 0,
-            height: 32,
-            child: IconButton(
-              onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => EditView(note: note),));
-              }, icon: const Icon(
-              Icons.edit
-            ),
-            padding: EdgeInsets.zero,
-            ),
-          )
-        ],
-      ),
+          padding: EdgeInsets.zero,
+          ),
+        )
+      ],
     );
   }
 }

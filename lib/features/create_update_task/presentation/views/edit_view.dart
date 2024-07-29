@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes_app/core/utiles/app_colors.dart';
 import 'package:notes_app/features/create_update_task/presentation/manger/edit_note_cubit/edit_note_cubit.dart';
 import 'package:notes_app/features/create_update_task/presentation/views/widgets/edit_view_body.dart';
 import 'package:notes_app/features/home/data/data_source/firestore_note_data_source.dart';
@@ -17,8 +18,8 @@ class EditView extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Edit Note'),
-          backgroundColor: Colors.transparent,
-          centerTitle: true,
+         backgroundColor: AppColors.kBackgroundColor,
+          elevation: 0,
         ),
         body: EditViewBody(
           note: note,

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes_app/core/utiles/app_colors.dart';
 import 'package:notes_app/features/create_update_task/presentation/manger/add_note_cubit/add_note_cubit.dart';
 import 'package:notes_app/features/create_update_task/presentation/views/widgets/add_view_body.dart';
 import 'package:notes_app/features/home/data/data_source/firestore_note_data_source.dart';
@@ -16,7 +17,8 @@ class AddView extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Add Note'),
-          backgroundColor: Colors.transparent,
+          backgroundColor: AppColors.kBackgroundColor,
+          elevation: 0,
           centerTitle: true,
         ),
         body: AddViewBody(

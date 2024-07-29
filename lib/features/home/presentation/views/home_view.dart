@@ -60,16 +60,16 @@ class HomeViewContent extends StatelessWidget {
                       onPressed: () {
                         scrollController.animateTo(
                           0.0,
-                          duration: Duration(milliseconds: 300),
+                          duration: const Duration(milliseconds: 300),
                           curve: Curves.easeOut,
                         );
                       },
-                      child: Icon(Icons.arrow_upward),
                       mini: true, // Make the button smaller
                       heroTag: 'scrollToTop', // Unique hero tag
+                      child: const Icon(Icons.arrow_upward),
                     )
                   : Container(),
-                  SizedBox(height: 8,),
+                 const SizedBox(height: 8,),
               FloatingActionButton(
                 onPressed: () {
                   Navigator.push(
@@ -79,8 +79,8 @@ class HomeViewContent extends StatelessWidget {
                     ),
                   );
                 },
-                child: const Icon(Icons.add),
                 heroTag: 'addNote', // Unique hero tag
+                child: const Icon(Icons.add),
               ),
             ],
           );

@@ -12,19 +12,18 @@ import 'package:notes_app/features/auth/presentation/views/widgets/custtom_butto
 import 'package:notes_app/core/widgets/custtom_text_field.dart';
 import 'package:notes_app/features/home/presentation/views/home_view.dart';
 
-class SignupViewBody extends StatefulWidget {
-  const SignupViewBody({super.key});
+// ignore: must_be_immutable
+class SignupViewBody extends StatelessWidget {
+   SignupViewBody({super.key});
 
-  @override
-  // ignore: library_private_types_in_public_api
-  _SignupViewBodyState createState() => _SignupViewBodyState();
-}
-
-class _SignupViewBodyState extends State<SignupViewBody> {
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
+
   bool isLoading = false;
+
   GlobalKey<FormState> keyForm = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     final firebaseAuth = FirebaseAuth.instance;
@@ -36,9 +35,7 @@ class _SignupViewBodyState extends State<SignupViewBody> {
       child: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AuthLoading) {
-            setState(() {
               isLoading = true;
-            });
           } else if (state is AuthError) {
               isLoading = false;
            snackBar(content: state.message, context: context);

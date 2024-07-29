@@ -64,8 +64,8 @@ class HomeViewContent extends StatelessWidget {
                           curve: Curves.easeOut,
                         );
                       },
-                      mini: true, // Make the button smaller
-                      heroTag: 'scrollToTop', // Unique hero tag
+                      mini: true, 
+                      heroTag: 'scrollToTop', 
                       child: const Icon(Icons.arrow_upward),
                     )
                   : Container(),
@@ -79,7 +79,7 @@ class HomeViewContent extends StatelessWidget {
                     ),
                   );
                 },
-                heroTag: 'addNote', // Unique hero tag
+                heroTag: 'addNote', 
                 child: const Icon(Icons.add),
               ),
             ],

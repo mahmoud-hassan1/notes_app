@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:notes_app/core/utiles/app_colors.dart';
 import 'package:notes_app/core/utiles/font.dart';
@@ -130,8 +131,13 @@ class LoginViewBody extends StatelessWidget {
                         label: "LOGIN",
                       ),
                       const SizedBox(
-                        height: 32,
+                        height: 16,
                       ),
+                      Text("Login with:",style: FontStyles.kSmallTextStyle(context),),
+                      IconButton(onPressed: (){
+                        BlocProvider.of<AuthCubit>(context).loginWithGoogle();
+                      }, icon: SvgPicture.asset("assets/icons/google.svg",width: 80,),
+                      padding: EdgeInsets.zero, ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

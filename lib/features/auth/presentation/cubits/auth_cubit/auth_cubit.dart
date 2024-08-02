@@ -10,6 +10,23 @@ part 'auth_state.dart';
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit(this.authRepo) : super(AuthInitial());
   final AuthRepositoryImpl authRepo;
+  void loginWithGoogle()async{
+    emit(AuthLoading());
+    try {
+      final user = await authRepo.loginWithGoogle();
+      if (user!= null) {
+        emit(AuthAuthenticated(user));
+      } else {
+        emit(AuthError("Login failed"));
+      }
+    } catch (e) {
+      if (e is FirebaseException) {
+        emit(AuthError(e.code));
+      } else {
+        emit(AuthError("Something went wrong"));
+      }
+    }
+  }
   void loginUser(String email, String password) async {
     emit(AuthLoading());
     try {
@@ -22,16 +39,20 @@ class AuthCubit extends Cubit<AuthState> {
     } catch (e) {
       if (e is FirebaseException) {
         emit(AuthError(e.code));
-      } else {
-        emit(AuthError(e.toString()));
+      }
+      else if(e is Exception){
+          emit(AuthError(e.toString().split(': ').last));
+      }
+       else {
+        emit(AuthError("Something went wrong"));
       }
     }
   }
 
-  void signupUser(String email, String password) async {
+  void signupUser(String name,String email, String password) async {
     emit(AuthLoading());
     try {
-      final user = await authRepo.signup(email, password);
+      final user = await authRepo.signup(name,email, password);
       if (user != null) {
         emit(AuthAuthenticated(user));
       } else {
@@ -41,7 +62,7 @@ class AuthCubit extends Cubit<AuthState> {
      if (e is FirebaseException) {
         emit(AuthError(e.code));
       } else {
-        emit(AuthError(e.toString()));
+        emit(AuthError("Something went wrong"));
       }
     }
   }

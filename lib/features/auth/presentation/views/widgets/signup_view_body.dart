@@ -10,14 +10,13 @@ import 'package:notes_app/features/auth/presentation/cubits/auth_cubit/auth_cubi
 import 'package:notes_app/features/auth/presentation/views/login_view.dart';
 import 'package:notes_app/features/auth/presentation/views/widgets/custtom_button.dart';
 import 'package:notes_app/core/widgets/custtom_text_field.dart';
-import 'package:notes_app/features/home/presentation/views/home_view.dart';
 
 // ignore: must_be_immutable
 class SignupViewBody extends StatelessWidget {
    SignupViewBody({super.key});
 
   final TextEditingController emailController = TextEditingController();
-
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   bool isLoading = false;
@@ -41,13 +40,11 @@ class SignupViewBody extends StatelessWidget {
            snackBar(content: state.message, context: context);
           } else if (state is AuthAuthenticated) {
               isLoading = false;
-            snackBar(content: "Sign up successful!", context: context);
+            snackBar(content: "Verfication link sent to your email", context: context);
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>  HomeView(
-                     uid: state.user.uid,
-                  ),
+                  builder: (context) =>  const LoginView(),
                 ));
           }
         },
@@ -68,6 +65,24 @@ class SignupViewBody extends StatelessWidget {
                           "Create Account",
                           style: FontStyles.kLargeTextStyle(context),
                         ),
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      CustomTextField(
+                        controller: nameController,
+                        label: "Name",
+                        prefixIcon: const Icon(Icons.person_outline_outlined),
+                        keyForm: keyForm,
+                        validator: (value){
+                           if (value!.isEmpty) {
+                              return 'Please enter Name';
+                            }
+                            else{
+                              return null;
+                            }
+                        },
+                        expand: false,
                       ),
                       const SizedBox(
                         height: 32,
@@ -124,7 +139,7 @@ class SignupViewBody extends StatelessWidget {
                         onTap: () { 
                           if(emailController.text.isNotEmpty&&passwordController.text.isNotEmpty){
                           BlocProvider.of<AuthCubit>(context).signupUser(
-                            emailController.text, passwordController.text);
+                            nameController.text,emailController.text, passwordController.text);
                           }
                           else {
                             snackBar(content: "Please enter Your email and password", context: context);

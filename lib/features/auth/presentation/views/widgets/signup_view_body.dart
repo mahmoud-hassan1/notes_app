@@ -137,7 +137,7 @@ class SignupViewBody extends StatelessWidget {
                       ),
                       CustomButton(
                         onTap: () { 
-                          if(emailController.text.isNotEmpty&&passwordController.text.isNotEmpty){
+                          if(emailController.text.isNotEmpty&&passwordController.text.isNotEmpty&&keyForm.currentState!.validate()){
                           BlocProvider.of<AuthCubit>(context).signupUser(
                             nameController.text,emailController.text, passwordController.text);
                           }
@@ -145,8 +145,6 @@ class SignupViewBody extends StatelessWidget {
                             snackBar(content: "Please enter Your email and password", context: context);
                           }
                         },
-                        emailController: emailController,
-                        passwordController: passwordController,
                         height: height,
                         label: "SIGN UP",
                       ),

@@ -60,7 +60,7 @@ class HomeViewContent extends StatelessWidget {
                       onPressed: () {
                         scrollController.animateTo(
                           0.0,
-                          duration: const Duration(milliseconds: 300),
+                          duration: const Duration(milliseconds: 500),
                           curve: Curves.easeOut,
                         );
                       },

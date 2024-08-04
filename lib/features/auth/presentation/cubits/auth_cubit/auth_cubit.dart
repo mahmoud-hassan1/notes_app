@@ -10,6 +10,20 @@ part 'auth_state.dart';
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit(this.authRepo) : super(AuthInitial());
   final AuthRepositoryImpl authRepo;
+  void resetPassword(String email)async{
+    emit(AuthLoading());
+    try{
+      await authRepo.sendPasswordResetLink(email);
+      emit(AuthSuccess());
+    }
+    catch (e) {
+      if (e is FirebaseException) {
+        emit(AuthError(e.code));
+      } else {
+        emit(AuthError("Something went wrong"));
+      }
+    }
+  }
   void loginWithGoogle()async{
     emit(AuthLoading());
     try {

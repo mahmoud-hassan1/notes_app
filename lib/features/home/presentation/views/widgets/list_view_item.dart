@@ -30,6 +30,7 @@ class ListViewItem extends StatelessWidget {
                   note.title,
                   style: FontStyles.kFontSize30(context).copyWith(),
                   textAlign: TextAlign.start,
+                  maxLines: null,
                 ),
               ),
               Align(
@@ -37,8 +38,9 @@ class ListViewItem extends StatelessWidget {
                 child: Text(
                   note.content,
                   style: FontStyles.kSmallTextStyle(context).copyWith(),
-                  maxLines: 2,
+                  maxLines: null,
                   textAlign: TextAlign.start,
+            
                 ),
               ),
             ],

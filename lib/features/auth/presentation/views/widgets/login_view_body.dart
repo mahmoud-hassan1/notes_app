@@ -8,6 +8,7 @@ import 'package:notes_app/core/utiles/font.dart';
 import 'package:notes_app/core/widgets/snackbar.dart';
 import 'package:notes_app/features/auth/data/repositories/auth_repo_imp.dart';
 import 'package:notes_app/features/auth/presentation/cubits/auth_cubit/auth_cubit.dart';
+import 'package:notes_app/features/auth/presentation/views/reset_password_view.dart';
 import 'package:notes_app/features/auth/presentation/views/signup_view.dart';
 import 'package:notes_app/features/auth/presentation/views/widgets/custtom_button.dart';
 import 'package:notes_app/core/widgets/custtom_text_field.dart';
@@ -27,6 +28,7 @@ class LoginViewBody extends StatelessWidget {
       final firebaseAuth = FirebaseAuth.instance;
   final authRepository = AuthRepositoryImpl(firebaseAuth: firebaseAuth);
     double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return BlocProvider(
       create: (context) => AuthCubit(authRepository),
       child: BlocConsumer<AuthCubit, AuthState>(
@@ -112,13 +114,14 @@ class LoginViewBody extends StatelessWidget {
                         controller: passwordController,
                       ),
                       const SizedBox(
-                        height: 32,
+                        height: 8,
                       ),
+                      TextButton(onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const ResetPasswordView(),));
+                      }, child:  Text("Forget password",style: FontStyles.kSmallTextStyle(context).copyWith( color: AppColors.kMintGreen),)),
                       CustomButton(
-                        emailController: emailController,
-                        passwordController: passwordController,
                         onTap: () { 
-                          if(emailController.text.isNotEmpty&&passwordController.text.isNotEmpty){
+                          if(emailController.text.isNotEmpty&&passwordController.text.isNotEmpty&& keyForm.currentState!.validate()){
                           BlocProvider.of<AuthCubit>(context)
                             .loginUser(
                                 emailController.text, passwordController.text);
@@ -133,10 +136,11 @@ class LoginViewBody extends StatelessWidget {
                       const SizedBox(
                         height: 16,
                       ),
+
                       Text("Login with:",style: FontStyles.kSmallTextStyle(context),),
                       IconButton(onPressed: (){
                         BlocProvider.of<AuthCubit>(context).loginWithGoogle();
-                      }, icon: SvgPicture.asset("assets/icons/google.svg",width: 80,),
+                      }, icon: SvgPicture.asset("assets/icons/google.svg",width: width*0.2,),
                       padding: EdgeInsets.zero, ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

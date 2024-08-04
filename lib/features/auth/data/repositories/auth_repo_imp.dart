@@ -65,4 +65,10 @@ void logout() {
     }
   firebaseAuth.signOut();
   }
+  
+  @override
+  Future<void> sendPasswordResetLink(String email) async{
+   await firebaseAuth.sendPasswordResetEmail(email: email);
+
+  }
 }

@@ -4,7 +4,7 @@ A Flutter application designed to help users manage their notes and tasks effici
 
 # Demo Video
 
-Watch the demo of the app here: [LinkedIn Video]()
+Watch the demo of the app here: [LinkedIn Video](https://www.linkedin.com/posts/mahmoud-hassan-b172142b9_flutter-firebase-mobileapp-activity-7225799453595607040-IFOU?utm_source=share&utm_medium=member_desktop)
 
 ## Features
 
@@ -13,7 +13,7 @@ Watch the demo of the app here: [LinkedIn Video]()
 * Email verification link sent after signing up (users cannot log in before verification)
 * Persistent login (users remain logged in after restarting the app)
 * Password reset via email link for forgotten passwords
-* Real-time note management using Firebase Firestore
+* note management using Firebase Firestore
 * Secure data storage and retrieval
 * User-friendly interface for creating, editing, and deleting notes
 * Support for multiple users
@@ -52,4 +52,4 @@ The project follows the Clean Architecture principles and MVVM pattern, structur
 For any questions or feedback, please reach out to:
 
 - **Name**: Mahmoud Hassan
-- **Email**: Mahmoud Hassan@gmail.com
+- **Email**: mahmoudhassan10191019@gmail.com

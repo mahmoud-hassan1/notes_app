@@ -9,6 +9,10 @@ Watch the demo of the app here: [LinkedIn Video]()
 ## Features
 
 * User authentication using Firebase Auth
+* Sign in with Google
+* Email verification link sent after signing up (users cannot log in before verification)
+* Persistent login (users remain logged in after restarting the app)
+* Password reset via email link for forgotten passwords
 * Real-time note management using Firebase Firestore
 * Secure data storage and retrieval
 * User-friendly interface for creating, editing, and deleting notes
